@@ -1,0 +1,14 @@
+# after installing the anaconda3 , many tools have to be downloaded
+# conda named enviroment has to be activated
+conda activate >env>
+# the tools are : Hisat2, feature count, fastqc, multiqc, picard. Sra-tool, trimmomatic
+# These are the commands for downloading: 
+
+conda install -c bioconda hisat2
+conda install -c bioconda subread  # contains featureCounts
+conda install -c bioconda fastqc
+conda install -c bioconda multiqc
+conda install -c bioconda picard
+conda install -c bioconda sra-tools  # SRAtoolkit
+conda install -c bioconda trimmomatic
+  
