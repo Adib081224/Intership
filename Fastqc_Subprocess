@@ -2,21 +2,13 @@ import subprocess
 
 import os
 
- 
-
 input_dir = "/pathtoyourfastq_files"
 
 output_dir = "/pathtosavefastqc_results"
 
- 
-
 os.makedirs(output_dir, exist_ok=True)
 
- 
-
 fastq_files = os.listdir(input_dir)
-
- 
 
 for file in fastq_files:
 
@@ -26,6 +18,4 @@ for file in fastq_files:
 
     subprocess.run(command, check=True)
 
- 
-
-print("FastQC analysis complete.")
+ print("FastQC analysis complete.")
