@@ -1,0 +1,31 @@
+import subprocess
+
+import os
+
+ 
+
+input_dir = "/pathtoyourfastq_files"
+
+output_dir = "/pathtosavefastqc_results"
+
+ 
+
+os.makedirs(output_dir, exist_ok=True)
+
+ 
+
+fastq_files = os.listdir(input_dir)
+
+ 
+
+for file in fastq_files:
+
+    file_path = os.path.join(input_dir, file)
+
+    command= ["fastqc", file_path, "-o", output_dir]
+
+    subprocess.run(command, check=True)
+
+ 
+
+print("FastQC analysis complete.")
