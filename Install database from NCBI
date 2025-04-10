@@ -1,0 +1,5 @@
+# Go to : https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/download-and-install/
+conda install -c conda-forge ncbi-datasets-cli
+# After installing the tool
+# Go to NCBI: write human then human then click on genome and click also on GRCh38.p14 ---> click on datasets ---> copy [ datasets download genome accession GCF_000001405.40 --include gff3,genome,seq-report]
+# Then write in bash in download it 
