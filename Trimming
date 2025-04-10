@@ -1,0 +1,35 @@
+import subprocess
+import os
+
+input_dir = "fastqc_data"
+output_dir = "fastqc_data_aTrimm"
+os.makedirs(output_dir, exist_ok=True)
+
+read1 = f"{input_dir}/SRR30230878_1.fastq"
+read2 = f"{input_dir}/SRR30230878_2.fastq"
+
+output_paired_1 = f"{output_dir}/SRR30230878_1_trimmed.paired.fastq."  
+output_unpaired_1 = f"{output_dir}/SRR30230878_1_trimmed.unpaired.fastq."
+output_paired_2 = f"{output_dir}/SRR30230878_2_trimmed.paired.fastq"
+output_unpaired_2 = f"{output_dir}/SRR30230878_2_trimmed.unpaired.fastq"
+
+
+trimmomatic_cmd = [
+    "trimmomatic", "PE",
+    "-threads", "4",
+    read1, read2,
+    output_paired_1, output_unpaired_1,
+    output_paired_2, output_unpaired_2,
+    "HEADCROP:10",
+    "LEADING:5",
+    "TRAILING:3",
+    "SLIDINGWINDOW:4:20",
+    "MINLEN:50"
+]
+
+try:
+    print(f"Running command: {' '.join(trimmomatic_cmd)}")
+    subprocess.run(trimmomatic_cmd, check=True)
+    print("Trimmomatic processing completed successfully")
+except subprocess.CalledProcessError as e:
+    print(f"Error running Trimmomatic: {e}")
