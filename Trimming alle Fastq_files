@@ -1,0 +1,52 @@
+import subprocess
+import os
+import glob
+
+input_dir = "fastqc_data"
+output_dir = "fastqc_data_aTrimm"
+os.makedirs(output_dir, exist_ok=True)
+
+# Get all the read1 files (assuming they end with _1.fastq)
+read1_files = glob.glob(f"{input_dir}/*_1.fastq")
+
+for read1 in read1_files:
+    # Get the corresponding read2 file by replacing _1.fastq with _2.fastq
+    read2 = read1.replace("_1.fastq", "_2.fastq")
+
+    # Skip if the read2 file doesn't exist
+    if not os.path.exists(read2):
+        print(f"Warning: Paired file {read2} not found for {read1}, skipping.")
+        continue
+
+    # Get the base name of the file (without path and extension)
+    base_name = os.path.basename(read1).replace("_1.fastq", "")
+
+    # Define output file paths
+    output_paired_1 = f"{output_dir}/{base_name}_1_trimmed.paired.fastq"
+    output_unpaired_1 = f"{output_dir}/{base_name}_1_trimmed.unpaired.fastq"
+    output_paired_2 = f"{output_dir}/{base_name}_2_trimmed.paired.fastq"
+    output_unpaired_2 = f"{output_dir}/{base_name}_2_trimmed.unpaired.fastq"
+
+    # Build the Trimmomatic command
+    trimmomatic_cmd = [
+        "trimmomatic", "PE",
+        "-threads", "4",
+        read1, read2,
+        output_paired_1, output_unpaired_1,
+        output_paired_2, output_unpaired_2,
+        "HEADCROP:10",
+        "LEADING:5",
+        "TRAILING:3",
+        "SLIDINGWINDOW:4:20",
+        "MINLEN:50"
+    ]
+
+    try:
+        print(f"Processing {base_name}...")
+        print(f"Running command: {' '.join(trimmomatic_cmd)}")
+        subprocess.run(trimmomatic_cmd, check=True)
+        print(f"Trimmomatic processing completed successfully for {base_name}")
+    except subprocess.CalledProcessError as e:
+        print(f"Error running Trimmomatic on {base_name}: {e}")
+
+print("All files processed.")
