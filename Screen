@@ -1,0 +1,6 @@
+Install: conda install screen
+Neuen Screen starten:	screen -S name
+Aus Screen raus (detach):	Ctrl + A, dann D
+Liste der Screens:	screen -ls
+Wieder reingehen:	screen -r name oder ID
+Screen komplett beenden:	exit
