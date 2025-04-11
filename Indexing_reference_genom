@@ -1,0 +1,1 @@
+hisat2-build  <path of the reference genom> <path of the folder where you wanna to have the indexed genom>
